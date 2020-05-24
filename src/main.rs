@@ -1,7 +1,14 @@
 #![deny(clippy::all)]
 #![forbid(unsafe_code)]
+mod cpu;
+mod flags_register;
 mod gpu;
+mod instruction_builder;
+mod instruction_targets;
+mod instructions;
+mod ld_tests;
 mod memory_map;
+mod registers;
 mod util;
 mod window;
 
@@ -11,7 +18,9 @@ use winit::event::{Event, VirtualKeyCode};
 use winit::event_loop::{ControlFlow, EventLoop};
 use winit_input_helper::WinitInputHelper;
 
+use cpu::CPU;
 use gpu::GPU;
+use instruction_builder::InstructionBuilder;
 use memory_map::MemoryMap;
 use util::Util;
 use window::create_window;
@@ -31,12 +40,24 @@ fn main_cpu() {
     let file_as_byte_array = Util::get_file_as_byte_vec(&String::from("resources/DMG_ROM.bin"));
 
     memory_map.load_vec(0, file_as_byte_array);
-
     memory_map.dump();
+
+    let mut _cpu = CPU::new(memory_map);
+
+    let mut _instruction_builder = InstructionBuilder::new();
+
+    // parse next instruction
+    let _instruction = _instruction_builder.create(&mut _cpu);
+    _instruction.execute(&mut _cpu);
+
+    // parse next instruction
+    let _instruction = _instruction_builder.create(&mut _cpu);
+    _instruction.execute(&mut _cpu);
 
     println!("END");
 }
 
+#[allow(dead_code)]
 fn main_render() -> Result<(), Error> {
     println!("Hello, world!");
 

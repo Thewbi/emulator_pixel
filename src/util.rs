@@ -10,7 +10,7 @@ impl Util {
         let mut file = File::open(&filename).expect("no file found");
         let metadata = metadata(&filename).expect("unable to read metadata");
         let mut buffer = vec![0; metadata.len() as usize];
-        file.read(&mut buffer).expect("buffer overflow");
+        file.read_exact(&mut buffer).expect("buffer overflow");
         buffer
     }
 }

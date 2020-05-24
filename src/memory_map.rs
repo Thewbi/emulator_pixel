@@ -1,10 +1,10 @@
 use std::boxed::Box;
 
 pub struct MemoryMap {
-    //mem: box [u8; 0xFFFF],
     pub mem: Box<[u8; 0xFFFF]>,
 }
 
+#[allow(dead_code)]
 impl MemoryMap {
     // ctor returning a self pointer
     pub fn new() -> Self {
@@ -13,11 +13,11 @@ impl MemoryMap {
         }
     }
 
-    pub fn load_byte(&mut self, address: usize, data: u8) {
-        self.mem[address] = data;
+    pub fn load_byte(&mut self, _address: usize, data: u8) {
+        self.mem[_address] = data;
     }
 
-    pub fn load_vec(&mut self, address: usize, data: Vec<u8>) {
+    pub fn load_vec(&mut self, _address: usize, data: Vec<u8>) {
         for (address, data) in self.mem.iter_mut().zip(data.iter()) {
             *address = *data
         }
